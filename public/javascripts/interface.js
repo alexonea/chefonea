@@ -1,6 +1,6 @@
 var dragEnabled = false;
 var dragElement = null;
-
+var focusedHolder = null;
 // $('.matrix').draggable();
 
 // $('.matrix').mousedown(function (e) {
@@ -20,3 +20,24 @@ var dragElement = null;
 // 		$('.matrix').draggable('enable');
 // 	}
 // });
+
+$('.holder').click(function (e) {
+	e.stopPropagation();
+	focusedHolder = $(this);
+	var text = $(this).text();
+	if (text.charCodeAt(0) == 9632) {
+		$(this).text('');
+	}
+});
+
+$(document).mousedown(function (e) {
+	if (focusedHolder != null) {
+		var text = focusedHolder.text();
+		console.log(text);
+		if (text.trim().length == 0) {
+			text = String.fromCharCode(9632);
+			focusedHolder.text(text);
+		}
+		focusedHolder = null;
+	}
+});
