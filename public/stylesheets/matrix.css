@@ -18,7 +18,7 @@ body table.matrix {
 
 .holder {
 	height: 15px;
-	width: 13px;
+	width: 13px; //auto !important;
 	padding: 3px;
 	text-align: center;
 }
