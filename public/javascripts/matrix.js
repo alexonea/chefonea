@@ -1,6 +1,14 @@
-var createMatrix = function (nrows, ncols) {
+var matdb = [];
+
+var createMatrix = function (nrows, ncols, id) {
 	var result = document.createElement('table');
+
+	if (id != 'undefined') {
+		result.id = 'm' + id;
+	}
+	
 	result.classList.add('matrix');
+
 	var tbody = document.createElement('tbody');
 	for (var i = 0; i < nrows; i++) {
 		var tr = document.createElement('tr');
@@ -14,5 +22,6 @@ var createMatrix = function (nrows, ncols) {
 		tbody.appendChild(tr);
 	};
 	result.appendChild(tbody);
+	matdb.push(result);
 	return result;
 }

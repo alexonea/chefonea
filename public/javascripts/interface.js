@@ -1,6 +1,7 @@
 var dragEnabled = false;
 var dragElement = null;
 var focusedHolder = null;
+var count = 1;
 
 var replaceWithReminder = function (elem, e) {
 	e.stopPropagation();
@@ -34,7 +35,7 @@ $('#confirm-add-custom-matrix').on('click', function (e) {
 	var nrows = parseInt($('#nrows').val());
 	var ncols = parseInt($('#ncols').val());
 
-	var elem = createMatrix(nrows, ncols);
+	var elem = createMatrix(nrows, ncols, count ++);
 	var page = document.querySelector('.content');
 
 
@@ -47,7 +48,7 @@ $('#confirm-add-custom-matrix').on('click', function (e) {
 });
 
 $('#nm2x2').on('click', function (e) {
-	var elem = createMatrix(2, 2);
+	var elem = createMatrix(2, 2, count ++);
 	var page = document.querySelector('.content');
 
 	page.appendChild(elem);
@@ -57,7 +58,7 @@ $('#nm2x2').on('click', function (e) {
 });
 
 $('#nm3x3').on('click', function (e) {
-	var elem = createMatrix(3, 3);
+	var elem = createMatrix(3, 3, count ++);
 	var page = document.querySelector('.content');
 
 	page.appendChild(elem);
