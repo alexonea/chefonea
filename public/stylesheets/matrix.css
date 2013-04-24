@@ -1,11 +1,12 @@
 body table.matrix {
 	border: 1px solid black;
-	border-radius: 10px !important;
+	border-radius: 6px !important;
 	border-top: none;
 	border-bottom: none;
 	border-collapse: separate;
 	border-spacing: 3px;
 	padding: 3px;
+	margin: 20px;
 }
 
 .matrix:hover {

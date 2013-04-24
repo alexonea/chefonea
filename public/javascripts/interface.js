@@ -41,3 +41,18 @@ $(document).mousedown(function (e) {
 		focusedHolder = null;
 	}
 });
+
+$('#nm-custom').click(function (e)  {
+	$('#add-custom-matrix').modal('toggle');
+});
+
+$('#confirm-add-custom-matrix').click(function (e) {
+	var nrows = parseInt($('#nrows').val());
+	var ncols = parseInt($('#ncols').val());
+
+	var elem = createMatrix(nrows, ncols);
+	var page = document.querySelector('.content');
+
+	$('#add-custom-matrix').modal('toggle');
+	page.appendChild(elem);
+});

@@ -19,7 +19,7 @@ block content
 									a(href='#', id='nm3x3') 3 x 3
 								li.divider
 								li
-									a(href='#', id='nm-custom') Custom...
+									a(href='#custom', id='nm-custom', data-toggle='modal') Custom...
 						li
 							a(href='#') New identity matrix
 
@@ -35,3 +35,18 @@ block content
 					.holder(contenteditable) &#9632;
 				td
 					.holder(contenteditable) &#9632;
+	.modal.hide.fade(aria-labelledby='customLabel', aria-hidden='true', role='dialog', id='add-custom-matrix')
+		.modal-header
+			button.btn.pull-right(type='button', data-dismiss='modal', aria-hidden='true') &times;
+			h3#customLabel Add new custom matrix
+		.modal-body
+			label Number of rows:
+			input(type='text', id='nrows')
+			label Number of columns:
+			input(type='text', id='ncols')
+			br
+			input(type='checkbox', id='idmat')
+			| Is this an identity matrix?
+		.modal-footer
+			.btn.btn-success(id='confirm-add-custom-matrix') Add to workspace	
+			.btn.btn-danger(data-dismiss='modal', aria-hidden='true') Close
