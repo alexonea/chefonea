@@ -6,7 +6,8 @@ body table.matrix {
 	border-collapse: separate;
 	border-spacing: 3px;
 	padding: 3px;
-	margin: 20px;
+	margin: 10px;
+	display: inline-table;
 }
 
 .matrix:hover {
@@ -32,4 +33,36 @@ body table.matrix {
 .holder:hover {
 	background-color: #eee;
 	cursor: pointer;
+}
+
+.sequence {
+	padding: 5px;
+	margin: 10px;
+	white-space: nowrap;
+	height: 100%;
+}
+
+.sequence:hover {
+	outline: 1px dotted #ccc;
+}
+
+.operator {
+	display: inline-block;
+	vertical-align: middle;
+	white-space: normal;
+}
+
+.helper {
+	display: inline-block;
+	vertical-align: middle;
+	height:100%;
+}
+
+.notation {
+	display: inline-block;
+	margin-left: -2px;
+	height: 100%;
+	margin-left: -7px;
+	margin-top: 10px;
+	vertical-align: top;
 }

@@ -64,6 +64,30 @@ $('#removemat').on('click', function (e) {
 	e.stopPropagation();
 });
 
+$('#transpose').on('click', function (e) {
+	var mat = elementToArray(activeMatrix);
+	mat = transposeMatrix(mat);
+
+	var elem = arrayToElement(mat);
+	var sequence = activeMatrix.parent();
+
+	var operator = document.createElement('div');
+	operator.innerHTML = "=";
+	operator.classList.add('operator');
+	//operator.style.paddingTop = sequence.height() / 2 - 4 + 'px';
+
+	var notation = document.createElement('div');
+	notation.classList.add('notation')
+	notation.innerHTML = 'T';
+
+	sequence[0].appendChild(notation);
+	sequence[0].appendChild(operator);
+	sequence[0].appendChild(elem);
+	
+	$('.content').removeClass('open');
+	e.stopPropagation();
+});
+
 $(document).mousedown(function (e) {
 	if (focusedHolder != null) {
 		var text = focusedHolder.text();
