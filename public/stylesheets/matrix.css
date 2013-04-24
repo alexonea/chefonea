@@ -19,9 +19,13 @@ body table.matrix {
 
 .holder {
 	height: 15px;
-	width: 13px; //auto !important;
+	width: 13px;
 	padding: 3px;
 	text-align: center;
+}
+
+.holder:focus {
+	outline: none;
 }
 
 .holder:hover {
