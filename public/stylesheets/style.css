@@ -10,3 +10,9 @@ a {
 .content {
 	padding: 30px;
 }
+
+#context-menu {
+	position: absolute;
+	top: 0;
+	left: 0;
+}

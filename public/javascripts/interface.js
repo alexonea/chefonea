@@ -41,6 +41,18 @@ var checkIDmat = function () {
 	return $('#idmat').is(':checked');
 };
 
+$('.matrix').on('mousedown', function (e) {
+	if (e.button == 2) {
+		$('#context-menu').css({
+			top: e.pageY + 10 + 'px',
+			left: e.pageX + 10 + 'px'
+		});
+		$('#context-menu').dropdown('toggle');
+		e.preventDefault();
+		return false;
+	}
+});
+
 $(document).mousedown(function (e) {
 	if (focusedHolder != null) {
 		var text = focusedHolder.text();

@@ -23,7 +23,15 @@ block content
 						li
 							a(href='#') New identity matrix
 
-	.content
+	.content(oncontextmenu='return false;')
+		ul.dropdown-menu(id='context-menu')
+			li
+				a(href='#') Transpose
+			li
+				a(href='#') Determinant
+			li.divider
+			li
+				a(href='#') Remove
 		table#m0.matrix
 			tr
 				td
