@@ -35,15 +35,16 @@ block content
 					.holder(contenteditable) &#9632;
 				td
 					.holder(contenteditable) &#9632;
+
 	.modal.hide.fade(aria-labelledby='customLabel', aria-hidden='true', role='dialog', id='add-custom-matrix')
 		.modal-header
 			button.btn.pull-right(type='button', data-dismiss='modal', aria-hidden='true') &times;
 			h3#customLabel Add new custom matrix
 		.modal-body
 			label Number of rows:
-			input(type='text', id='nrows')
+			input.number(type='text', id='nrows')
 			label Number of columns:
-			input(type='text', id='ncols')
+			input.number(type='text', id='ncols')
 			br
 			input(type='checkbox', id='idmat')
 			| Is this an identity matrix?

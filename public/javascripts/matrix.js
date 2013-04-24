@@ -1,12 +1,12 @@
 var matdb = [];
 
-var createMatrix = function (nrows, ncols, id) {
+var createMatrix = function (nrows, ncols, id, isIDmat) {
 	var result = document.createElement('table');
 
 	if (id != 'undefined') {
 		result.id = 'm' + id;
 	}
-	
+
 	result.classList.add('matrix');
 
 	var tbody = document.createElement('tbody');
@@ -16,7 +16,7 @@ var createMatrix = function (nrows, ncols, id) {
 			var td = document.createElement('td');
 			td.classList.add('holder');
 			td.setAttribute('contenteditable', 'true');
-			td.innerHTML = '&#9632;';
+			td.innerHTML = (isIDmat) ? ((i == j) ? 1 : 0) : '&#9632;';
 			tr.appendChild(td);
 		};
 		tbody.appendChild(tr);

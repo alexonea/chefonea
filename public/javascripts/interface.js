@@ -3,6 +3,31 @@ var dragElement = null;
 var focusedHolder = null;
 var count = 1;
 
+var repairAllBindings = function () {
+
+	$('.holder').on('click', function (e) {
+		replaceWithReminder($(this), e);
+	});
+
+	$('.number, .holder').on('keydown', function (event) {
+		// Allow: backspace, delete, tab, escape, and enter
+		if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || 
+			 // Allow: Ctrl+A
+			(event.keyCode == 65 && event.ctrlKey === true) || 
+			 // Allow: home, end, left, right
+			(event.keyCode >= 35 && event.keyCode <= 39)) {
+				 // let it happen, don't do anything
+				 return;
+		}
+		else {
+			// Ensure that it is a number and stop the keypress
+			if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+				event.preventDefault(); 
+			}
+		}
+	});
+};
+
 var replaceWithReminder = function (elem, e) {
 	e.stopPropagation();
 	focusedHolder = elem;
@@ -10,11 +35,11 @@ var replaceWithReminder = function (elem, e) {
 	if (text.charCodeAt(0) == 9632) {
 		elem.text('');
 	}
-}
+};
 
-$('.holder').on('click', function (e) {
-	replaceWithReminder($(this), e);
-});
+var checkIDmat = function () {
+	return $('#idmat').is(':checked');
+};
 
 $(document).mousedown(function (e) {
 	if (focusedHolder != null) {
@@ -27,6 +52,23 @@ $(document).mousedown(function (e) {
 	}
 });
 
+$('#idmat').on('click', function (e) {
+	if ($(this).is(':checked')) {
+		$('#ncols').prop('disabled', true);
+		var text = $('#nrows').val();
+		$('#ncols').val(text);
+	} else {
+		$('#ncols').prop('disabled', false);
+	}
+});
+
+$('#nrows').on('keyup', function (e) {
+	if ($('#idmat').is(':checked')) {
+		var text = $(this).val();
+		$('#ncols').val(text);
+	}
+});
+
 $('#nm-custom').on('click', function (e)  {
 	$('#add-custom-matrix').modal('toggle');
 });
@@ -34,35 +76,39 @@ $('#nm-custom').on('click', function (e)  {
 $('#confirm-add-custom-matrix').on('click', function (e) {
 	var nrows = parseInt($('#nrows').val());
 	var ncols = parseInt($('#ncols').val());
+	var isIDmat = checkIDmat();
 
-	var elem = createMatrix(nrows, ncols, count ++);
+	var elem = createMatrix(nrows, ncols, count ++, isIDmat);
 	var page = document.querySelector('.content');
 
 
 	$('#add-custom-matrix').modal('toggle');
 	page.appendChild(elem);
 	
-	$('.holder').on('click', function (e) {
-		replaceWithReminder($(this), e);
-	});
+	repairAllBindings();
 });
 
 $('#nm2x2').on('click', function (e) {
-	var elem = createMatrix(2, 2, count ++);
+	var isIDmat = checkIDmat();
+	var elem = createMatrix(2, 2, count ++, isIDmat);
 	var page = document.querySelector('.content');
 
 	page.appendChild(elem);
-	$('.holder').on('click', function (e) {
-		replaceWithReminder($(this), e);
-	});
+
+	repairAllBindings();
 });
 
 $('#nm3x3').on('click', function (e) {
-	var elem = createMatrix(3, 3, count ++);
+	var isIDmat = checkIDmat();
+	var elem = createMatrix(3, 3, count ++, isIDmat);
 	var page = document.querySelector('.content');
 
 	page.appendChild(elem);
-	$('.holder').on('click', function (e) {
-		replaceWithReminder($(this), e);
-	});
+
+	repairAllBindings();
+});
+
+$(document).ready(function () {
+	console.log('Scripts loaded! Ready to use!');
+	repairAllBindings();
 });
