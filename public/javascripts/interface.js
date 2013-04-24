@@ -140,8 +140,7 @@ $('#confirm-add-custom-matrix').on('click', function (e) {
 });
 
 $('#nm2x2').on('click', function (e) {
-	var isIDmat = checkIDmat();
-	var elem = createMatrix(2, 2, count ++, isIDmat);
+	var elem = createMatrix(2, 2, count ++, false);
 	var page = document.querySelector('.content');
 
 	page.appendChild(elem);
@@ -150,8 +149,7 @@ $('#nm2x2').on('click', function (e) {
 });
 
 $('#nm3x3').on('click', function (e) {
-	var isIDmat = checkIDmat();
-	var elem = createMatrix(3, 3, count ++, isIDmat);
+	var elem = createMatrix(3, 3, count ++, false);
 	var page = document.querySelector('.content');
 
 	page.appendChild(elem);
