@@ -1,7 +1,6 @@
 var createMatrix = function (nrows, ncols) {
 	var result = document.createElement('table');
 	result.classList.add('matrix');
-	result.setAttribute('contenteditable', 'true');
 	var tbody = document.createElement('tbody');
 	for (var i = 0; i < nrows; i++) {
 		var tr = document.createElement('tr');
