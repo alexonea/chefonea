@@ -11,6 +11,7 @@ body table.matrix {
 
 .matrix:hover {
 	cursor: move;
+	background: #ffc;
 }
 
 .matrix:focus {
@@ -18,9 +19,9 @@ body table.matrix {
 }
 
 .holder {
-	height: 15px;
-	width: 13px;
-	padding: 3px;
+	height: auto;
+	width: auto;
+	padding: 3px 5px;
 	text-align: center;
 }
 
