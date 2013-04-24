@@ -57,6 +57,7 @@ var arrayToElement = function (matrixData) {
 	result.id = 'm' + matdb.length;
 
 	result.classList.add('matrix');
+	result.classList.add('result');
 	result.setAttribute('nrows', matrixData.nrows);
 	result.setAttribute('ncols', matrixData.ncols);
 
@@ -66,7 +67,7 @@ var arrayToElement = function (matrixData) {
 		for (var j = 0; j < matrixData.ncols; j++) {
 			var td = document.createElement('td');
 			td.classList.add('holder');
-			td.setAttribute('contenteditable', 'true');
+			td.setAttribute('contenteditable', 'false');
 			td.innerHTML = matrixData.numbers[i][j];
 			tr.appendChild(td);
 		};

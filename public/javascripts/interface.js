@@ -58,8 +58,12 @@ var checkIDmat = function () {
 };
 
 $('#removemat').on('click', function (e) {
-	if (activeMatrix != null)
-		activeMatrix.remove();
+	if (activeMatrix != null) {
+		if (activeMatrix[0].classList.contains('result'))
+			activeMatrix.remove();
+		else
+			activeMatrix.parent().remove();
+	}
 	$('.content').removeClass('open');
 	e.stopPropagation();
 });
