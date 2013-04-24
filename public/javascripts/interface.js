@@ -1,6 +1,7 @@
 var dragEnabled = false;
 var dragElement = null;
 var focusedHolder = null;
+var activeMatrix = null;
 var count = 1;
 
 var repairAllBindings = function () {
@@ -26,6 +27,21 @@ var repairAllBindings = function () {
 			}
 		}
 	});
+
+	$('.matrix').on('mousedown', function (e) {
+		if (e.button == 2) {
+
+			activeMatrix = $(this);
+
+			$('#context-menu').css({
+				top: e.pageY + 10 + 'px',
+				left: e.pageX + 10 + 'px'
+			});
+			$('#context-menu').dropdown('toggle');
+			e.preventDefault();
+			return false;
+		}
+	});
 };
 
 var replaceWithReminder = function (elem, e) {
@@ -41,16 +57,11 @@ var checkIDmat = function () {
 	return $('#idmat').is(':checked');
 };
 
-$('.matrix').on('mousedown', function (e) {
-	if (e.button == 2) {
-		$('#context-menu').css({
-			top: e.pageY + 10 + 'px',
-			left: e.pageX + 10 + 'px'
-		});
-		$('#context-menu').dropdown('toggle');
-		e.preventDefault();
-		return false;
-	}
+$('#removemat').on('click', function (e) {
+	if (activeMatrix != null)
+		activeMatrix.remove();
+	$('.content').removeClass('open');
+	e.stopPropagation();
 });
 
 $(document).mousedown(function (e) {
