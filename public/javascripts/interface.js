@@ -92,6 +92,25 @@ $('#transpose').on('click', function (e) {
 	e.stopPropagation();
 });
 
+$('#determinant').on('click', function (e) {
+	var mat = elementToArray(activeMatrix);
+	var det = matrixDeterminant(mat);
+
+	var sequence = activeMatrix.parent();
+
+	var operator = document.createElement('div');
+	operator.innerHTML = "=";
+	operator.classList.add('operator');
+
+	var result = document.createElement('span');
+	result.innerHTML = det + "";
+
+	sequence[0].appendChild(operator);
+	sequence[0].appendChild(result);
+
+	sequence[0].children[0].style.borderRadius = 0 + 'px';
+});
+
 $(document).mousedown(function (e) {
 	if (focusedHolder != null) {
 		var text = focusedHolder.text();

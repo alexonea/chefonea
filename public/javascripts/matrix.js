@@ -79,7 +79,7 @@ var arrayToElement = function (matrixData) {
 };
 
 var transposeMatrix = function (matrixData) {
-    var result = {};
+    var result = new Object();
     result.ncols = matrixData.nrows;
     result.nrows = matrixData.ncols;
     result.numbers = [];
@@ -92,3 +92,67 @@ var transposeMatrix = function (matrixData) {
     }
     return result;
 };
+
+var matrixDeterminant = function (matrixData) {
+
+	if (matrixData.ncols != matrixData.nrows)
+		return null;
+
+	var n = matrixData.nrows;
+	var ST = new Array(n);
+	var det = 0;
+
+	for (var i = 0; i < n; i++)
+		ST[i] = 0;
+
+	var valid = function (k) {
+		for (var i = 0; i < k; i++) {
+			if (ST[i] == ST[k])
+				return 0;
+		}
+		return 1;
+	};
+
+	var solutie = function (k) {
+		if (k == n - 1)
+			return 1;
+		return 0;
+	};
+
+	var signatura = function (m) {
+		for (var i = 0; i < n - 1; i++) {
+			for (var j = i + 1; j < n; j++) {
+				if (ST[i] > ST[j])
+					m++;
+			}
+		}
+		if (m % 2 == 0)
+			return 1;
+		return 0;
+	};
+
+	var afisare = function (k) {
+		var p = 1;
+		for (var i = 0; i <= k; i++) {
+			p = p * matrixData.numbers[i][ST[i]];
+		}
+		return Math.pow(-1, signatura(1)) * p;
+	};
+
+	var bk = function (k) {
+		for (var i = 0; i < n; i++) {
+			ST[k] = i;
+			if (valid(k)) {
+				if (solutie(k)) {
+					det = det + afisare(k);
+				} else {
+					bk(k + 1);
+				}
+			}
+		}
+	};
+
+	bk(0);
+
+	return det;
+}
