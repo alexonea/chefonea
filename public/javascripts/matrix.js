@@ -1,6 +1,6 @@
 var matdb = [];
 
-var createMatrix = function (nrows, ncols, id, isIDmat) {
+var createMatrix = function (nrows, ncols, id, isIDmat, inSequence) {
 	var result = document.createElement('table');
 
 	if (id != 'undefined') {
@@ -30,7 +30,9 @@ var createMatrix = function (nrows, ncols, id, isIDmat) {
 	sequence.classList.add('sequence');
 	sequence.appendChild(result);
 
-	return sequence;
+	if (inSequence)
+		return sequence;
+	return result;
 };
 
 var elementToArray = function (id) {

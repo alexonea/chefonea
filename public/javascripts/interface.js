@@ -111,6 +111,47 @@ $('#determinant').on('click', function (e) {
 	sequence[0].children[0].style.borderRadius = 0 + 'px';
 });
 
+$('#sum-with').on('click', function (e) {
+	var mat = elementToArray(activeMatrix);
+
+	var sequence = activeMatrix.parent();
+
+	var operator = document.createElement('div');
+	operator.classList.add('operator');
+	operator.innerHTML = "+";
+
+	var operand = createMatrix(mat.nrows, mat.ncols, ++count, false, false);
+
+	sequence[0].appendChild(operator);
+	sequence[0].appendChild(operand);
+});
+
+$(document).mousedown(function (e) {
+	if (focusedHolder != null) {
+		var text = focusedHolder.text();
+		if (text.trim().length == 0) {
+			text = String.fromCharCode(9632);
+			focusedHolder.text(text);
+		}
+		focusedHolder = null;
+	}
+});
+
+$('#multiply-by').on('click', function (e) {
+	var mat = elementToArray(activeMatrix);
+
+	var sequence = activeMatrix.parent();
+
+	var operator = document.createElement('div');
+	operator.classList.add('operator');
+	operator.innerHTML = "*";
+
+	var operand = createMatrix(mat.ncols, mat.nrows, ++count, false, false);
+
+	sequence[0].appendChild(operator);
+	sequence[0].appendChild(operand);
+});
+
 $(document).mousedown(function (e) {
 	if (focusedHolder != null) {
 		var text = focusedHolder.text();
@@ -148,7 +189,7 @@ $('#confirm-add-custom-matrix').on('click', function (e) {
 	var ncols = parseInt($('#ncols').val());
 	var isIDmat = checkIDmat();
 
-	var elem = createMatrix(nrows, ncols, count ++, isIDmat);
+	var elem = createMatrix(nrows, ncols, count ++, isIDmat, true);
 	var page = document.querySelector('.content');
 
 
@@ -159,7 +200,7 @@ $('#confirm-add-custom-matrix').on('click', function (e) {
 });
 
 $('#nm2x2').on('click', function (e) {
-	var elem = createMatrix(2, 2, count ++, false);
+	var elem = createMatrix(2, 2, count ++, false, true);
 	var page = document.querySelector('.content');
 
 	page.appendChild(elem);
@@ -168,7 +209,7 @@ $('#nm2x2').on('click', function (e) {
 });
 
 $('#nm3x3').on('click', function (e) {
-	var elem = createMatrix(3, 3, count ++, false);
+	var elem = createMatrix(3, 3, count ++, false, true);
 	var page = document.querySelector('.content');
 
 	page.appendChild(elem);
