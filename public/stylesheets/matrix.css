@@ -66,3 +66,7 @@ body table.matrix {
 	margin-top: 10px;
 	vertical-align: top;
 }
+
+.result {
+	padding: 5px;
+}

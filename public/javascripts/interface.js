@@ -103,6 +103,7 @@ $('#determinant').on('click', function (e) {
 	operator.classList.add('operator');
 
 	var result = document.createElement('span');
+	result.classList.add('result')
 	result.innerHTML = det + "";
 
 	sequence[0].appendChild(operator);
