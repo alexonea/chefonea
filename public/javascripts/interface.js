@@ -37,7 +37,7 @@ var repairAllBindings = function () {
 				top: e.pageY + 10 + 'px',
 				left: e.pageX + 10 + 'px'
 			});
-			
+
 			$('#context-menu').dropdown('toggle');
 			e.preventDefault();
 			return false;
@@ -118,6 +118,15 @@ $('#determinant').on('click', function (e) {
 	result.classList.add('result')
 	result.innerHTML = det + "";
 
+	if (sequence[0].classList.contains('completed')) {
+		sequence = new Array(1);
+		sequence[0] = document.createElement('div');
+		sequence[0].classList.add('sequence');
+		sequence[0].appendChild(activeMatrix.clone()[0]);
+		$('.content')[0].appendChild(sequence[0]);
+	}
+
+
 	sequence[0].appendChild(operator);
 	sequence[0].appendChild(result);
 
@@ -138,6 +147,15 @@ $('#sum-with').on('click', function (e) {
 	operator.innerHTML = "+";
 
 	var operand = createMatrix(mat.nrows, mat.ncols, ++count, false, false);
+
+	if (sequence[0].classList.contains('completed')) {
+		sequence = new Array(1);
+		sequence[0] = document.createElement('div');
+		sequence[0].classList.add('sequence');
+		sequence[0].appendChild(activeMatrix.clone()[0]);
+		$('.content')[0].appendChild(sequence[0]);
+	}
+
 
 	sequence[0].appendChild(operator);
 	sequence[0].appendChild(operand);
@@ -168,6 +186,15 @@ $('#multiply-by').on('click', function (e) {
 	operator.innerHTML = "*";
 
 	var operand = createMatrix(mat.ncols, mat.nrows, ++count, false, false);
+
+	if (sequence[0].classList.contains('completed')) {
+		sequence = new Array(1);
+		sequence[0] = document.createElement('div');
+		sequence[0].classList.add('sequence');
+		sequence[0].appendChild(activeMatrix.clone()[0]);
+		$('.content')[0].appendChild(sequence[0]);
+	}
+
 
 	sequence[0].appendChild(operator);
 	sequence[0].appendChild(operand);
