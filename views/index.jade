@@ -4,10 +4,10 @@ block content
 
 	.navbar.navbar-inverse.navbar-static-top
 		.navbar-inner
-			a.brand(href='.') ChefOnea
+			a.brand(href='.') Matrix
 			ul.nav
 				li.dropdown
-					a.dropdown-toggle(href='#', data-toggle='dropdown') Matrix
+					a.dropdown-toggle(href='#', data-toggle='dropdown') Workspace
 						b.caret
 					ul.dropdown-menu
 						li.dropdown-submenu
@@ -21,7 +21,7 @@ block content
 								li
 									a(href='#custom', id='nm-custom', data-toggle='modal') Custom...
 						li
-							a(href='#') New identity matrix
+							a(href='#identity', id='nm-identity', data-toggle='id-modal') New identity matrix...
 
 	.content(oncontextmenu='return false;')
 		ul.dropdown-menu(id='context-menu')
@@ -54,4 +54,15 @@ block content
 			| Is this an identity matrix?
 		.modal-footer
 			.btn.btn-success(id='confirm-add-custom-matrix') Add to workspace	
+			.btn.btn-danger(data-dismiss='modal', aria-hidden='true') Close
+
+	.modal.hide.fade.id-modal(aria-labelledby='customLabel', aria-hidden='true', role='dialog', id='add-identity-matrix')
+		.modal-header
+			button.btn.btn-small.pull-right(type='button', data-dismiss='id-modal', aria-hidden='true') &times;
+			h3#customLabel Add new identity matrix
+		.modal-body
+			label Number of rows and columns:
+			input.number(type='text', id='nrows1')
+		.modal-footer
+			.btn.btn-success(id='confirm-add-identity-matrix') Add to workspace	
 			.btn.btn-danger(data-dismiss='modal', aria-hidden='true') Close

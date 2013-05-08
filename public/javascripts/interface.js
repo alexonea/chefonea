@@ -184,6 +184,10 @@ $('#nm-custom').on('click', function (e)  {
 	$('#add-custom-matrix').modal('toggle');
 });
 
+$('#nm-identity').on('click', function (e) {
+	$('#add-identity-matrix').modal('toggle');
+});
+
 $('#confirm-add-custom-matrix').on('click', function (e) {
 	var nrows = parseInt($('#nrows').val());
 	var ncols = parseInt($('#ncols').val());
@@ -194,6 +198,19 @@ $('#confirm-add-custom-matrix').on('click', function (e) {
 
 
 	$('#add-custom-matrix').modal('toggle');
+	page.appendChild(elem);
+	
+	repairAllBindings();
+});
+
+$('#confirm-add-identity-matrix').on('click', function (e) {
+	var nrows = parseInt($('#nrows1').val());
+
+	var elem = createMatrix(nrows, nrows, count ++, true, true);
+	var page = document.querySelector('.content');
+
+
+	$('#add-identity-matrix').modal('toggle');
 	page.appendChild(elem);
 	
 	repairAllBindings();
