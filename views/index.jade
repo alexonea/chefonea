@@ -13,30 +13,22 @@ block content
 						li.dropdown-submenu
 							a(href='#') New matrix
 							ul.dropdown-menu
-								li
-									a(href='#', id='nm2x2') 2 x 2
-								li
-									a(href='#', id='nm3x3') 3 x 3
+								li: a(href='#', id='nm2x2') 2 x 2
+								li: a(href='#', id='nm3x3') 3 x 3
 								li.divider
-								li
-									a(href='#custom', id='nm-custom', data-toggle='modal') Custom...
-						li
-							a(href='#identity', id='nm-identity', data-toggle='id-modal') New identity matrix...
+								li: a(href='#custom', id='nm-custom', data-toggle='modal') Custom...
+						li: a(href='#identity', id='nm-identity', data-toggle='id-modal') New identity matrix...
+				li: a(href='#', id='about', data-toggle='about-modal') About
 
 	.content(oncontextmenu='return false;')
 		ul.dropdown-menu(id='context-menu')
-			li
-				a#transpose(href='#') Transpose
-			li
-				a#determinant(href='#') Determinant
+			li: a#transpose(href='#') Transpose
+			li: a#determinant(href='#') Determinant
 			li.divider
-			li
-				a#sum-with(href='#') Sum with...
-			li
-				a#multiply-by(href='#') Multiply by...
+			li: a#sum-with(href='#') Sum with...
+			li: a#multiply-by(href='#') Multiply by...
 			li.divider
-			li
-				a#removemat(href='#') Remove
+			li: a#removemat(href='#') Remove
 
 
 
@@ -66,3 +58,14 @@ block content
 		.modal-footer
 			.btn.btn-success(id='confirm-add-identity-matrix') Add to workspace	
 			.btn.btn-danger(data-dismiss='modal', aria-hidden='true') Close
+
+	.modal.hide.fade(aria-labelledby='customLabel', aria-hidden='true', role='dialog', id='about-modal')
+		.modal-header
+			h3#customLabel About
+		.modal-body
+			p Matrix is a platform designed to help students perform simple computations with matrices. The platform is open source, designed and implemented by Teodor Onea and Alexandru Onea in May 2013. Feedback and contributions are welcomed. The project can be found here:
+			p: a(href='https://github.com/alexonea/chefonea') Github
+			p For further details on implementation, questions or suggestions feel free to contact us:
+			p: a(href='mailto:onea.alex@gmail.com') Alexandru Onea
+		.modal-footer
+			.btn(data-dismiss='modal', aria-hidden='true') Close

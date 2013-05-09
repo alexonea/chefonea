@@ -158,3 +158,23 @@ var matrixDeterminant = function (matrixData) {
 
 	return det;
 }
+
+var sumMatrices = function (m1, m2) {
+	var i = m1.ncols, j;
+	 while (i--) { j = m1.nrows;
+    	while (j--) {
+    		m1.numbers[i][j] += m2.numbers[i][j];
+    	}
+    }
+    return m1;
+}
+
+var subtractMatrices = function (m1, m2) {
+	var i = m1.ncols, j;
+	 while (i--) { j = m1.nrows;
+    	while (j--) {
+    		m1.numbers[i][j] -= m2.numbers[i][j];
+    	}
+    }
+    return m1;
+}

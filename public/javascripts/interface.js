@@ -43,6 +43,34 @@ var repairAllBindings = function () {
 			return false;
 		}
 	});
+
+	$('.compute-button').on('click', function (e) {
+		var sequence = $(this).parent();
+		var matrices = sequence.children('.matrix');
+
+		var mat1 = elementToArray($(matrices[0]));
+		var mat2 = elementToArray($(matrices[1]));
+
+		var rmat = sumMatrices(mat1, mat2);
+		console.log(mat1);
+		console.log(mat2);
+		console.log(rmat);
+		var result = arrayToElement(rmat);
+
+		var operator = document.createElement('div');
+		operator.innerHTML = "=";
+		operator.classList.add('operator');
+		//operator.style.paddingTop = sequence.height() / 2 - 4 + 'px';
+
+		sequence[0].appendChild(operator);
+		sequence[0].appendChild(result);
+		sequence[0].classList.add('completed');
+		
+		$('.content').removeClass('open');
+		sequence.children('.compute-button')[0].remove();
+		repairAllBindings();
+		e.stopPropagation();
+	});
 };
 
 var replaceWithReminder = function (elem, e) {
@@ -119,16 +147,19 @@ $('#determinant').on('click', function (e) {
 	result.innerHTML = det + "";
 
 	if (sequence[0].classList.contains('completed')) {
+		var mat2 = activeMatrix.clone();
+		mat2[0].classList.remove('result');
 		sequence = new Array(1);
 		sequence[0] = document.createElement('div');
 		sequence[0].classList.add('sequence');
-		sequence[0].appendChild(activeMatrix.clone()[0]);
+		sequence[0].appendChild(mat2[0]);
 		$('.content')[0].appendChild(sequence[0]);
 	}
 
 
 	sequence[0].appendChild(operator);
 	sequence[0].appendChild(result);
+	sequence[0].classList.add('completed');
 
 	sequence[0].children[0].style.borderRadius = 0 + 'px';
 	
@@ -156,9 +187,17 @@ $('#sum-with').on('click', function (e) {
 		$('.content')[0].appendChild(sequence[0]);
 	}
 
+	var actionButton = document.createElement('div');
+	actionButton.classList.add('btn');
+	actionButton.classList.add('compute-button');
+	actionButton.classList.add('btn-warning');
+	actionButton.classList.add('pull-right');
+	actionButton.innerHTML = "Compute";
+
 
 	sequence[0].appendChild(operator);
 	sequence[0].appendChild(operand);
+	sequence[0].appendChild(actionButton);
 
 	$('.content').removeClass('open');
 	repairAllBindings();
@@ -238,6 +277,10 @@ $('#nm-custom').on('click', function (e)  {
 
 $('#nm-identity').on('click', function (e) {
 	$('#add-identity-matrix').modal('toggle');
+});
+
+$('#about').on('click', function (e) {
+	$('#about-modal').modal('toggle');
 });
 
 $('#confirm-add-custom-matrix').on('click', function (e) {
