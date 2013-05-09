@@ -178,3 +178,22 @@ var subtractMatrices = function (m1, m2) {
     }
     return m1;
 }
+
+var multiplyMatrices = function (m1, m2) {
+	var result = new Object();
+	result.ncols = m2.ncols;
+	result.nrows = m1.nrows;
+	result.numbers = [];
+	var m = m1.ncols;
+
+	var i = result.ncols, j;
+    while (i--) { j = result.nrows;
+    	result.numbers[i] = [];
+    	while (j--) {
+    		result.numbers[i][j] = 0;
+    		for (var k = 0; k < m; k++)
+    			result.numbers[i][j] += m1.numbers[i][k] * m2.numbers[k][j];
+    	}
+    }
+    return result;
+}

@@ -51,7 +51,15 @@ var repairAllBindings = function () {
 		var mat1 = elementToArray($(matrices[0]));
 		var mat2 = elementToArray($(matrices[1]));
 
-		var rmat = sumMatrices(mat1, mat2);
+		var rmat;
+
+		if (sequence[0].classList.contains('sum'))
+			rmat = sumMatrices(mat1, mat2);
+		else if (sequence[0].classList.contains('diff'))
+			rmat = subtractMatrices(mat1, mat2);
+		else
+			rmat = multiplyMatrices(mat1, mat2);
+
 		console.log(mat1);
 		console.log(mat2);
 		console.log(rmat);
@@ -198,6 +206,44 @@ $('#sum-with').on('click', function (e) {
 	sequence[0].appendChild(operator);
 	sequence[0].appendChild(operand);
 	sequence[0].appendChild(actionButton);
+	sequence[0].classList.add('sum');
+
+	$('.content').removeClass('open');
+	repairAllBindings();
+	e.stopPropagation();	
+});
+
+$('#subtract-from').on('click', function (e) {
+	var mat = elementToArray(activeMatrix);
+
+	var sequence = activeMatrix.parent();
+
+	var operator = document.createElement('div');
+	operator.classList.add('operator');
+	operator.innerHTML = "-";
+
+	var operand = createMatrix(mat.nrows, mat.ncols, ++count, false, false);
+
+	if (sequence[0].classList.contains('completed')) {
+		sequence = new Array(1);
+		sequence[0] = document.createElement('div');
+		sequence[0].classList.add('sequence');
+		sequence[0].appendChild(activeMatrix.clone()[0]);
+		$('.content')[0].appendChild(sequence[0]);
+	}
+
+	var actionButton = document.createElement('div');
+	actionButton.classList.add('btn');
+	actionButton.classList.add('compute-button');
+	actionButton.classList.add('btn-warning');
+	actionButton.classList.add('pull-right');
+	actionButton.innerHTML = "Compute";
+
+
+	sequence[0].appendChild(operator);
+	sequence[0].appendChild(operand);
+	sequence[0].appendChild(actionButton);
+	sequence[0].classList.add('diff');
 
 	$('.content').removeClass('open');
 	repairAllBindings();
@@ -234,10 +280,18 @@ $('#multiply-by').on('click', function (e) {
 		$('.content')[0].appendChild(sequence[0]);
 	}
 
+	var actionButton = document.createElement('div');
+	actionButton.classList.add('btn');
+	actionButton.classList.add('compute-button');
+	actionButton.classList.add('btn-warning');
+	actionButton.classList.add('pull-right');
+	actionButton.innerHTML = "Compute";
 
 	sequence[0].appendChild(operator);
 	sequence[0].appendChild(operand);
-	
+	sequence[0].appendChild(actionButton);
+	sequence[0].classList.add('mul');	
+
 	$('.content').removeClass('open');
 	repairAllBindings();
 	e.stopPropagation();
