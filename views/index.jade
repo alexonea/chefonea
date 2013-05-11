@@ -4,21 +4,21 @@ block content
 
 	.navbar.navbar-inverse.navbar-static-top
 		.navbar-inner
-			a.brand(href='.') Matrix
-			ul.nav
-				li.dropdown
-					a.dropdown-toggle(href='#', data-toggle='dropdown') Workspace
-						b.caret
-					ul.dropdown-menu
-						li.dropdown-submenu
-							a(href='#') New matrix
-							ul.dropdown-menu
-								li: a(href='#', id='nm2x2') 2 x 2
-								li: a(href='#', id='nm3x3') 3 x 3
-								li.divider
-								li: a(href='#custom', id='nm-custom', data-toggle='modal') Custom...
-						li: a(href='#identity', id='nm-identity', data-toggle='id-modal') New identity matrix...
-				li: a(href='#', id='about', data-toggle='about-modal') About
+			.wrapper
+				a.brand(href='/') Matrix
+				ul.nav
+					li
+						a(href='#'): small Workspace
+						ul
+							li
+								a(href='#') New matrix
+								ul
+									li: a(href='#', id='nm2x2') 2 x 2
+									li: a(href='#', id='nm3x3') 3 x 3
+									li.divider
+									li: a(href='#custom', id='nm-custom', data-toggle='modal') Custom...
+							li: a(href='#identity', id='nm-identity', data-toggle='id-modal') New identity matrix...
+					li: a(href='#', id='about', data-toggle='about-modal'): small About
 
 	.content(oncontextmenu='return false;')
 		ul.dropdown-menu(id='context-menu')
