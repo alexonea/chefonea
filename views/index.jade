@@ -5,8 +5,10 @@ block content
 	.navbar.navbar-inverse.navbar-static-top
 		.navbar-inner
 			.wrapper
-				a.brand(href='/') Matrix
-				ul.nav
+				a.brand(href='/')
+					span.fui-cmd-24.space-after
+					| Matrixx
+				ul.nav.pull-left
 					li
 						a(href='#'): small Workspace
 						ul
@@ -19,6 +21,10 @@ block content
 									li: a(href='#custom', id='nm-custom', data-toggle='modal') Custom...
 							li: a(href='#identity', id='nm-identity', data-toggle='id-modal') New identity matrix...
 					li: a(href='#', id='about', data-toggle='about-modal'): small About
+				ul.nav.pull-right
+					li: a(href='#')
+						//span.fui-bubble-24.forum-icon
+						small Forum
 
 	.content(oncontextmenu='return false;')
 		ul.dropdown-menu(id='context-menu')

@@ -31,3 +31,7 @@ a {
 .brand {
 	color: #fff !important;
 }
+
+.space-after {
+	margin-right: 5px;
+}
