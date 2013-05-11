@@ -207,6 +207,7 @@ $('#sum-with').on('click', function (e) {
 	sequence[0].appendChild(operand);
 	sequence[0].appendChild(actionButton);
 	sequence[0].classList.add('sum');
+	sequence[0].classList.add('completed');
 
 	$('.content').removeClass('open');
 	repairAllBindings();
@@ -244,6 +245,7 @@ $('#subtract-from').on('click', function (e) {
 	sequence[0].appendChild(operand);
 	sequence[0].appendChild(actionButton);
 	sequence[0].classList.add('diff');
+	sequence[0].classList.add('completed');
 
 	$('.content').removeClass('open');
 	repairAllBindings();
@@ -290,7 +292,8 @@ $('#multiply-by').on('click', function (e) {
 	sequence[0].appendChild(operator);
 	sequence[0].appendChild(operand);
 	sequence[0].appendChild(actionButton);
-	sequence[0].classList.add('mul');	
+	sequence[0].classList.add('mul');
+	sequence[0].classList.add('completed');
 
 	$('.content').removeClass('open');
 	repairAllBindings();
