@@ -14,6 +14,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 
 
 routes.forum = require('./routes/forum');
+routes.logout = require('./routes/logout');
 
 var app = express();
 
@@ -25,35 +26,40 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
+app.use(express.cookieParser()); 
+app.use(express.session({secret: 'am_sarmale'}));
 app.use(passport.initialize());
-app.use(passport.session());
 app.use(app.router);
 app.use(express.favicon('favicon.png'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-console.log(process.env.FACEBOOK_APP_ID);
-console.log(process.env.FACEBOOK_APP_SECRET);
-console.log(process.env.CALLBACK_URL);
-
 passport.use(new FacebookStrategy({
-  clientID: process.env.FACEBOOK_APP_ID,
-  clientSecret: process.env.FACEBOOK_APP_SECRET,
-  callbackURL: process.env.CALLBACK_URL
+  clientID: process.env.FACEBOOK_APP_ID.toString().trim(),
+  clientSecret: process.env.FACEBOOK_APP_SECRET.toString().trim(),
+  callbackURL: process.env.CALLBACK_URL.toString().trim(),
+  profileFields: ['id', 'displayName', 'photos', 'email'],
   },
   function (accessToken, refreshToken, profile, done) {
-    var Database = require('lib/database.js');
-    var db = new Database();
 
-    db.findUser(profile.id, function (err, user) {
-      if (err) { return done(err); }
-      if (user.length === 0) {
-        db.addUser(profile, function () {
-          var result = new Object();
-          result.id = profile.id;
+    process.nextTick(function () {
+      var Database = require('./lib/database.js');
+      var db = new Database();
+
+      var result = new Object();
+      result.id = profile.id;
+      result.name = profile.displayName;
+      result.email = profile.email;
+      result.photo = profile.photos[0].value;
+
+      db.findUser(profile.id, function (err, user) {
+        if (err) { return done(err); }
+        if (user.length === 0) {
+          db.addUser(result, function () {
+            done(null, result);
+          });
+        } else
           done(null, result);
-        });
-      } else
-        done(null, user[0]);
+      });
     });
   }
 ));
@@ -75,7 +81,9 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/forum', routes.forum);
 
-app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/logout', routes.logout);
+
+app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'read_stream' }));
 app.get('/auth/facebook/callback', 
   passport.authenticate('facebook', { successRedirect: '/',
                                       failureRedirect: '/' }));

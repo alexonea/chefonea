@@ -52,3 +52,11 @@ a {
 	background: #34495e;
 	z-index: 1000;
 }
+
+.photo {
+	width: 35px;
+	height: 35px;
+	margin: -16px 0 -16px 10px !important;
+	border-radius: 8px;
+	overflow: hidden !important;
+}

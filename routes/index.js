@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Matrix' });
+	res.render('index', { title: 'Matrix', user: req.session.passport.user });
 };
