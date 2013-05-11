@@ -1,0 +1,15 @@
+extends layout
+
+block content
+	.navbar.navbar-inverse.navbar-static-top
+			.navbar-inner
+				.wrapper
+					a.brand(href='/forum')
+						span.fui-bubble-24.space-after
+						| Forum
+					ul.nav.pull-left
+						li: a(href='#'): small Hello
+					ul.nav.pull-right
+						li: a(href='/')
+							//span.fui-bubble-24.forum-icon
+							small Go back to workspace

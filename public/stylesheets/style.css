@@ -29,11 +29,19 @@ a {
 }
 
 .brand {
-	color: #fff !important;
+	color: #89a !important;
+}
+
+.brand span {
+	color: #89a;
 }
 
 .space-after {
 	margin-right: 5px;
+}
+
+.space-before {
+	margin-left: 5px;
 }
 
 #footer {
