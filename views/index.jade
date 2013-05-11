@@ -35,7 +35,6 @@ block content
 
 	.modal.hide.fade(aria-labelledby='customLabel', aria-hidden='true', role='dialog', id='add-custom-matrix')
 		.modal-header
-			button.btn.btn-small.pull-right(type='button', data-dismiss='modal', aria-hidden='true') &times;
 			h3#customLabel Add new custom matrix
 		.modal-body
 			label Number of rows:
@@ -47,18 +46,17 @@ block content
 			| Is this an identity matrix?
 		.modal-footer
 			.btn.btn-success(id='confirm-add-custom-matrix') Add to workspace	
-			.btn.btn-danger(data-dismiss='modal', aria-hidden='true') Close
+			.btn(data-dismiss='modal', aria-hidden='true') Close
 
 	.modal.hide.fade.id-modal(aria-labelledby='customLabel', aria-hidden='true', role='dialog', id='add-identity-matrix')
 		.modal-header
-			button.btn.btn-small.pull-right(type='button', data-dismiss='id-modal', aria-hidden='true') &times;
 			h3#customLabel Add new identity matrix
 		.modal-body
 			label Number of rows and columns:
 			input.number(type='text', id='nrows1')
 		.modal-footer
 			.btn.btn-success(id='confirm-add-identity-matrix') Add to workspace	
-			.btn.btn-danger(data-dismiss='modal', aria-hidden='true') Close
+			.btn(data-dismiss='modal', aria-hidden='true') Close
 
 	.modal.hide.fade(aria-labelledby='customLabel', aria-hidden='true', role='dialog', id='about-modal')
 		.modal-header
