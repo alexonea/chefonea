@@ -60,3 +60,16 @@ a {
 	border-radius: 8px;
 	overflow: hidden !important;
 }
+
+.menu-icon {
+	padding-right: 10px;
+	color: #9ab;
+}
+
+.profile {
+	padding-right: 0px !important;
+}
+
+ul {
+	left: -16px !important;
+}

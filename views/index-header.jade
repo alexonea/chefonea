@@ -26,8 +26,17 @@
 							small Log in
 							span.fui-man-16.space-before
 					- else
-						li: a(href='#')
-							small #{user.name}
-							img.photo(src=user.photo)
+						li
+							a.profile(href='#')
+								small #{user.name}
+								img.photo(src=user.photo)
 							ul
-								li: a(href='/logout'): small Logout
+								li: a(href='#')
+									small
+										span.fui-settings-16.menu-icon
+										| Settings
+								li: a(href='/logout')
+									small
+										span.fui-cross-16.menu-icon
+										| Logout
+									
