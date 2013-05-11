@@ -11,12 +11,16 @@ var repairAllBindings = function () {
 	});
 
 	$('.number, .holder').on('keydown', function (event) {
+
+		console.log(event.keyCode);
+
 		// Allow: backspace, delete, tab, escape, and enter
 		if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || 
 			 // Allow: Ctrl+A
 			(event.keyCode == 65 && event.ctrlKey === true) || 
 			 // Allow: home, end, left, right
-			(event.keyCode >= 35 && event.keyCode <= 39)) {
+			(event.keyCode >= 35 && event.keyCode <= 39) ||
+			(event.keyCode == 109 && $(this).text().length == 0)) {
 				 // let it happen, don't do anything
 				 return;
 		}
