@@ -35,3 +35,12 @@ a {
 .space-after {
 	margin-right: 5px;
 }
+
+#footer {
+	position: fixed;
+	bottom: 0%;
+	height: 40px;
+	width: 100%;
+	background: #34495e;
+	z-index: 1000;
+}
