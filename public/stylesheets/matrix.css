@@ -12,7 +12,7 @@ body table.matrix {
 
 .matrix:hover {
 	cursor: move;
-	background: #ffc;
+	background: #ffe;
 }
 
 .matrix:focus {
@@ -43,7 +43,7 @@ body table.matrix {
 }
 
 .sequence:hover {
-	outline: 1px dotted #ccc;
+	outline: 1px dotted #888;
 }
 
 .operator {
