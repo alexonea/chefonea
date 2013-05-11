@@ -42,8 +42,9 @@ block content
 			label Number of columns:
 			input.number(type='text', id='ncols')
 			br
-			input(type='checkbox', id='idmat')
-			| Is this an identity matrix?
+			label.checkbox(for='idmat')
+				input(type='checkbox', id='idmat', value)
+				| Is this an identity matrix?
 		.modal-footer
 			.btn.btn-success(id='confirm-add-custom-matrix') Add to workspace	
 			.btn(data-dismiss='modal', aria-hidden='true') Close
