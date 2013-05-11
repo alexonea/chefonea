@@ -1,0 +1,26 @@
+.navbar.navbar-inverse.navbar-static-top
+		.navbar-inner
+			.wrapper
+				a.brand(href='/')
+					span.fui-cmd-24.space-after
+					| Matrix
+				ul.nav.pull-left
+					li
+						a(href='#'): small Workspace
+						ul
+							li
+								a(href='#') New matrix
+								ul
+									li: a(href='#', id='nm2x2') 2 x 2
+									li: a(href='#', id='nm3x3') 3 x 3
+									li.divider
+									li: a(href='#custom', id='nm-custom', data-toggle='modal') Custom...
+							li: a(href='#identity', id='nm-identity', data-toggle='id-modal') New identity matrix...
+					li: a(href='#', id='about', data-toggle='about-modal'): small About
+				ul.nav.pull-right
+					li: a(href='/forum')
+						//span.fui-bubble-24.forum-icon
+						small Forum
+					li: a(href='#', data-toggle='tooltip', data-placement='bottom', data-original-title='Log in with Facebook', title)
+						small Log in
+						span.fui-man-16.space-before

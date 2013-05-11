@@ -1,0 +1,36 @@
+.modal.hide.fade(aria-labelledby='customLabel', aria-hidden='true', role='dialog', id='add-custom-matrix')
+		.modal-header
+			h3#customLabel Add new custom matrix
+		.modal-body
+			label Number of rows:
+			input.number(type='text', id='nrows')
+			label Number of columns:
+			input.number(type='text', id='ncols')
+			br
+			label.checkbox(for='idmat')
+				input(type='checkbox', id='idmat', value)
+				| Is this an identity matrix?
+		.modal-footer
+			.btn.btn-success(id='confirm-add-custom-matrix') Add to workspace	
+			.btn(data-dismiss='modal', aria-hidden='true') Close
+
+	.modal.hide.fade.id-modal(aria-labelledby='customLabel', aria-hidden='true', role='dialog', id='add-identity-matrix')
+		.modal-header
+			h3#customLabel Add new identity matrix
+		.modal-body
+			label Number of rows and columns:
+			input.number(type='text', id='nrows1')
+		.modal-footer
+			.btn.btn-success(id='confirm-add-identity-matrix') Add to workspace	
+			.btn(data-dismiss='modal', aria-hidden='true') Close
+
+	.modal.hide.fade(aria-labelledby='customLabel', aria-hidden='true', role='dialog', id='about-modal')
+		.modal-header
+			h3#customLabel About
+		.modal-body
+			p Matrix is a platform designed to help students perform simple computations with matrices. The platform is open source, designed and implemented by Teodor Onea and Alexandru Onea in May 2013. Feedback and contributions are welcomed. The project can be found here:
+			p: a(href='https://github.com/alexonea/chefonea') Github
+			p For further details on implementation, questions or suggestions feel free to contact us:
+			p: a(href='mailto:onea.alex@gmail.com') Alexandru Onea
+		.modal-footer
+			.btn(data-dismiss='modal', aria-hidden='true') Close
