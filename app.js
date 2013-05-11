@@ -83,10 +83,19 @@ app.get('/forum', routes.forum);
 
 app.get('/logout', routes.logout);
 
+var restrict = function(req, res, next){
+    if (!req.session.passport.user) {
+        req.session.redirect_to = '/';
+        res.redirect('/login');
+    } else {
+        next();
+    }
+};
+
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'read_stream' }));
 app.get('/auth/facebook/callback', 
-  passport.authenticate('facebook', { successRedirect: '/',
-                                      failureRedirect: '/' }));
+  passport.authenticate('facebook', { successRedirect: '.',
+                                      failureRedirect: '.' }));
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

@@ -9,6 +9,21 @@
 					ul.nav.pull-right
 						li: a(href='/')
 							small Go back to workspace
-						li: a(href='/auth/facebook', data-toggle='tooltip', data-placement='bottom', data-original-title='Log in with Facebook', title)
-							small Log in
-							span.fui-man-16.space-before
+						- if (!user)
+							li: a(href='/auth/facebook', data-toggle='tooltip', data-placement='bottom', data-original-title='Log in with Facebook', title)
+								small Log in
+								span.fui-man-16.space-before
+						- else
+							li
+								a.profile(href='#')
+									small #{user.name}
+									img.photo(src=user.photo)
+								ul
+									li: a(href='#')
+										small
+											span.fui-settings-16.menu-icon
+											| Settings
+									li: a(href='/logout?redirect=forum')
+										small
+											span.fui-cross-16.menu-icon
+											| Logout
