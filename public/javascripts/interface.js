@@ -574,11 +574,11 @@ $('#load').on('click', function(e) {
 
 	$.ajax({
 		type: 'GET',
-		url: '/load?uid=' + uid,
-		// data: {uid: uid},
-		dataType: 'json',
+		url: '/load',
+		data: {uid: uid},
+		// dataType: 'json',
 		// traditional: true,
-		contentType: "application/json; charset=utf-8",
+		// contentType: "application/json; charset=utf-8",
 		success: function (data) {
 
 			if (data.code == 0) {
