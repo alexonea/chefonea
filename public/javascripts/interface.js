@@ -303,6 +303,10 @@ $('#multiply-by').on('click', function (e) {
 });
 
 $(document).mousedown(function (e) {
+
+	var content = $('.content')[0].innerHTML;
+	localStorage.setItem('content', content);
+
 	if (focusedHolder != null) {
 		var text = focusedHolder.text();
 		if (text.trim().length == 0) {
@@ -388,7 +392,19 @@ $('#nm3x3').on('click', function (e) {
 	repairAllBindings();
 });
 
+$('#clear-all').on('click', function (e) {
+	localStorage.setItem('content', '');
+	document.location('/');
+});
+
+$(document).on('keyup', function(e) {
+	var content = $('.content')[0].innerHTML;
+	localStorage.setItem('content', content);
+});
+
 $(document).ready(function () {
 	console.log('Scripts loaded! Ready to use!');
+
+	$('.content')[0].innerHTML = localStorage.getItem('content');
 	repairAllBindings();
 });
