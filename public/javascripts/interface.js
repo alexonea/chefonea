@@ -576,9 +576,9 @@ $('#load').on('click', function(e) {
 		type: 'GET',
 		url: '/load',
 		data: {uid: uid},
-		// dataType: 'json',
+		dataType: 'json',
 		// traditional: true,
-		// contentType: "application/json; charset=utf-8",
+		contentType: "application/json; charset=utf-8",
 		success: function (data) {
 
 			if (data.code == 0) {
