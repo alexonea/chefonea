@@ -66,10 +66,18 @@ a {
 	color: #9ab;
 }
 
+.icon {
+	color: #9ab;	
+}
+
 .profile {
 	padding-right: 0px !important;
 }
 
 .profile-settings {
 	left: -20px !important;
+}
+
+.tooltip-inner {
+	width: 150px !important;
 }
