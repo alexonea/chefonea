@@ -474,6 +474,11 @@ $('#save').on('click', function (e) {
 	syncWorkspace();
 });
 
+$('.workspace-title').on('focusout', function () {
+	workspace.name = $(this)[0].innerHTML;
+	saveLocalWorkspaceInfo();
+});
+
 $(document).on('keyup', function(e) {
 	saveLocalWorkspaceInfo();
 });
