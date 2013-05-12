@@ -581,7 +581,9 @@ $('#load').on('click', function(e) {
 		// contentType: "application/json; charset=utf-8",
 		success: function (data) {
 
+			console.log(data);
 			if (data.code == 0) {
+
 				var ws = data.data;
 				if (ws.length == 0)
 					loadingAlert.innerHTML = '<a href="#"><span class="loading">You have no saved workspaces</span></a>';
