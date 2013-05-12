@@ -581,7 +581,7 @@ $('#load').on('click', function(e) {
 		// contentType: "application/json; charset=utf-8",
 		success: function (data) {
 
-			console.log(data);
+			console.log(data.code);
 			if (data.code == 0) {
 
 				var ws = data.data;
