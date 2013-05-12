@@ -73,3 +73,7 @@ a {
 .tooltip-inner {
 	width: 150px !important;
 }
+
+.loading {
+	text-align: center;
+}

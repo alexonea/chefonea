@@ -4,26 +4,25 @@ var focusedHolder = null;
 var activeMatrix = null;
 var count = 1;
 
-var workspace = new Object();
+var workspace = {};
 workspace.data = '';
 workspace.lastupdate = new Date();
-workspace.name = '';
+workspace.name = 'Name this workspace...';
 workspace.wid = '';
 
-var updateLocalWorkspaceInfo = function (w) {
-	workspace = w;
-	localStorage.setItem('workspace', JSON.stringify(w));
-}
 
 var saveLocalWorkspaceInfo = function () {
-	var content = $('.workspace')[0].innerHTML;
-	workspace.data = content;
+	// var content = $('.workspace')[0].innerHTML;
+	// workspace.data = content;
 	localStorage.setItem('workspace', JSON.stringify(workspace));
 }
 
 var loadLocalWorkspaceInfo = function () {
-	if (localStorage.getItem('workspace') === 'undefined')
+
+	var x = localStorage.getItem('workspace');
+	if (x === null) {
 		localStorage.setItem('workspace', JSON.stringify(workspace));
+	}
 
 	var local = JSON.parse(localStorage.getItem('workspace'));
 	if (local) {
@@ -33,7 +32,44 @@ var loadLocalWorkspaceInfo = function () {
 		$('.workspace')[0].innerHTML = '';
 		localStorage.setItem('workspace', JSON.stringify(workspace));
 	}
-	workspace = local;
+	workspace.wid = local.wid || '';
+	workspace.name = local.name || 'Name this workspace...';
+	workspace.data = local.data || '';
+	workspace.lastupdate = local.lastupdate || new Date();
+	repairAllBindings();
+}
+
+var loadRemoteWorkspace = function (id) {
+	var user_data = {};
+	user_data.uid = $('.profile')[0].id;
+	user_data.wid = id;
+
+	$.ajax({
+		type: 'GET',
+		url: '/load',
+		data: user_data,
+		dataType: 'json',
+		traditional: true,
+		contentType: "application/json; charset=utf-8",
+		success: function (data) {
+
+			if (data.code == 0) {
+				var ws = data.data;
+				workspace.wid = ws[0]._id;
+				workspace.name = ws[0].name;
+				workspace.lastupdate = ws[0].lastupdate;
+				workspace.data = ws[0].data;
+				saveLocalWorkspaceInfo();
+				loadLocalWorkspaceInfo();
+			} else {
+				$('#temp')[0].remove();
+				showAlert('danger', 'Error loading your workspace!', 3000);
+			}
+		},
+		error: function(err) {
+			console.error(err);
+		}
+	});
 }
 
 var repairAllBindings = function () {
@@ -330,6 +366,8 @@ $('#multiply-by').on('click', function (e) {
 
 $(document).mousedown(function (e) {
 
+	var content = $('.workspace')[0].innerHTML;
+	workspace.data = content;
 	saveLocalWorkspaceInfo();
 
 	if (focusedHolder != null) {
@@ -420,7 +458,9 @@ $('#nm3x3').on('click', function (e) {
 $('#clear-all').on('click', function (e) {
 	workspace.data = '';
 	workspace.name = 'Name this workspace...';
-	updateLocalWorkspaceInfo(workspace);
+	workspace.wid = '';
+	workspace.lastupdate = new Date();
+	saveLocalWorkspaceInfo();
 });
 
 var showAlert = function (type, message, time) {
@@ -439,11 +479,11 @@ var showAlert = function (type, message, time) {
 
 var syncWorkspace = function () {
 
-	var user_data = new Object();
-	user_data.uid = $('.profile')[0].id;
-	user_data.data = workspace.data;
+	var user_data = {};
 	user_data.wid = workspace.wid;
+	user_data.data = workspace.data;
 	user_data.name = workspace.name;
+	user_data.uid = $('.profile')[0].id;
 
 	$.ajax({
 		type: 'GET',
@@ -454,11 +494,11 @@ var syncWorkspace = function () {
 		contentType: "application/json; charset=utf-8",
 		success: function (alex) {
 
-			if (alex.code == 0) {
+			if (alex.code >= 0) {
 				
 				showAlert('success', 'All your changes have been saved! Keep up the good work!', 3000);
-				workspace.wid = alex.wid;
-				updateLocalWorkspaceInfo(alex.workspace);
+				workspace.wid = alex.workspace.wid;
+				saveLocalWorkspaceInfo();
 
 				$('.workspace')[0].id = alex.wid;
 			} else {
@@ -477,7 +517,6 @@ $('#save').on('click', function (e) {
 
 $('.workspace-title').on('focusout', function () {
 	var text = $(this)[0].innerText;
-	console.log(text);
 	if (text.trim() == '') {
 		$(this)[0].innerHTML = 'Name this workspace...';
 	}
@@ -490,7 +529,7 @@ $('.workspace-title').on('focusin', function () {
 	if (text == 'Name this workspace...') {
 		$(this)[0].innerHTML = '';
 	}
-	$(this).focus();
+	// $(this).focus();
 });
 
 var saveTitleUpdate = function () {
@@ -510,7 +549,69 @@ $('.workspace-title').on('keydown', function (e) {
 	return false;
 });
 
+$('#load').on('click', function(e) {
+	var menuParent = $(this).parent()[0];
+
+	var ul = document.createElement('ul');
+	ul.id = 'temp';
+
+	var loadingAlert = document.createElement('li');
+	loadingAlert.classList.add('disabled');
+	loadingAlert.innerHTML = '<a href="#"><span class="loading">Loading...</span></a>';
+	ul.appendChild(loadingAlert);
+
+	menuParent.appendChild(ul);
+
+	$(document).on('click', function (e) {
+		if ($('#temp').length > 0) $('#temp')[0].remove();
+	});
+
+	$('#temp').on('focusout', function () {
+		if ($(this).length > 0) $(this)[0].remove();
+	});
+
+	var uid = $('.profile')[0].id;
+
+	$.ajax({
+		type: 'GET',
+		url: '/load',
+		data: {uid: uid},
+		dataType: 'json',
+		traditional: true,
+		contentType: "application/json; charset=utf-8",
+		success: function (data) {
+
+			if (data.code == 0) {
+				var ws = data.data;
+				if (ws.length == 0)
+					loadingAlert.innerHTML = '<a href="#"><span class="loading">You have no saved workspaces</span></a>';
+				else {
+					for (var i = ws.length - 1; i >= 0; i--) {
+						var elem = document.createElement('li');
+						elem.innerHTML = '<a href="#" class="loaditem" id="' + ws[i]._id + '">' + ws[i].name + '</a>';
+
+						ul.appendChild(elem);
+					};
+					$('.loading').parent()[0].remove();
+					$('.loaditem').on('click', function (e) {
+						loadRemoteWorkspace($(this)[0].id);
+					});
+				}
+			} else {
+				$('#temp')[0].remove();
+				showAlert('danger', 'Error loading your workspaces!', 3000);
+			}
+		},
+		error: function(err) {
+			console.error(err);
+		}
+	});
+});
+
+
 $(document).on('keyup', function(e) {
+	var content = $('.workspace')[0].innerHTML;
+	workspace.data = content;
 	saveLocalWorkspaceInfo();
 });
 

@@ -10,21 +10,27 @@ var sync = function (req, res) {
 		var data = req.query['data'];
 		var name = req.query['name'];
 
-		var result = new Object();
+		var result = {};
 		result.code = 0;
 		result.description = 'Success!';
+		result.workspace = {};
 
 		if (uid === user.id) {
-			db.findWorkspace(wid, function (err, data) {
+			db.findWorkspace(wid, function (err, alex) {
 				if (!err) {
-					if (data.length == 0) {
+					if (alex.length == 0) {
 						/* not found, needs creation */
 						db.addWorkspace({ uid: uid, data: data, lastupdate: new Date(), name: name, _id: db.ObjectId()}, function (err, object) {
 							if (!err) {
 								/* created */
+								console.log(err);
+								console.log(object);
 								result.code = 0;
 								result.description = 'Success!';
-								result.workspace = object;
+								result.workspace.wid = object._id;
+								result.workspace.data = object.data;
+								result.workspace.lastupdate = object.lastupdate;
+								result.workspace.name = object.name;
 								res.write(JSON.stringify(result));
 								res.end();
 							} else {
@@ -37,13 +43,20 @@ var sync = function (req, res) {
 						});
 					} else {
 						/* found, needs update */
-						var wsp = data[0];
+						var wsp = alex[0];
 						if (wsp.uid === uid) {
 							/* permissions ok, will update */
-								db.updateWorkspace(wid, data, new Date(), function (err, object) {
-								result.code = 0;
+
+							wsp.lastupdate = new Date();
+							wsp.name = name;
+							wsp.data = data;
+							wsp.save(function (err) {
+								result.code = 1;
 								result.description = 'Success!';
-								result.workspace = object;
+								result.workspace.wid = wsp._id;
+								result.workspace.data = wsp.data;
+								result.workspace.lastupdate = wsp.lastupdate;
+								result.workspace.name = wsp.name;
 								res.write(JSON.stringify(result));
 								res.end();
 							});
