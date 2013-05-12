@@ -1,0 +1,35 @@
+html, body {
+	padding: 0px;
+	background: url('../images/grid.png');
+}
+
+#page {
+	margin: 30px 50px;
+}
+
+.todo-search {
+	width: 250px;
+	height: 25px !important;
+	padding: 3px 20px 8px 20px !important;
+	border-radius: 15px !important;
+	background-position: 95% !important;
+}
+
+.todo-search-field {
+	font-size: 15px !important;
+}
+
+span.search-box {
+	position: relative;
+	top: 8px !important;
+}
+
+li.search-box {
+	margin-left: 25px;
+}
+
+.navbar-unread {
+	position: relative;
+	display: block !important;
+	margin-left: 50px;
+}

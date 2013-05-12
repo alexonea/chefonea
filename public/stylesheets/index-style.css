@@ -1,0 +1,7 @@
+html, body {
+	padding: 0px;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background: url('../images/background.png');
+	height: 100% !important;
+	width: 100% !important;
+}

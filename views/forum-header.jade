@@ -5,7 +5,12 @@
 						span.fui-bubble-24.space-after
 						| Forum
 					ul.nav.pull-left
-						li: a(href='#'): small Hello
+						li: a(href='#')
+							small Notifications
+							.navbar-unread 54
+						li.search-box: span.search-box
+							.todo-search.mrm
+								input.todo-search-field(type='search', value, placeholder='Search for posts...')
 						// form.navbar-search
 						// 	input.search-query(type='text', placeholder='Search')
 					ul.nav.pull-right
