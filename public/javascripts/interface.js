@@ -4,6 +4,38 @@ var focusedHolder = null;
 var activeMatrix = null;
 var count = 1;
 
+var workspace = new Object();
+workspace.data = '';
+workspace.lastupdate = new Date();
+workspace.name = '';
+workspace.wid = '';
+
+var updateLocalWorkspaceInfo = function (w) {
+	workspace = w;
+	localStorage.setItem('workspace', JSON.stringify(w));
+}
+
+var saveLocalWorkspaceInfo = function () {
+	var content = $('.workspace')[0].innerHTML;
+	workspace.data = content;
+	localStorage.setItem('workspace', JSON.stringify(workspace));
+}
+
+var loadLocalWorkspaceInfo = function () {
+	if (localStorage.getItem('workspace') === 'undefined')
+		localStorage.setItem('workspace', JSON.stringify(workspace));
+
+	var local = JSON.parse(localStorage.getItem('workspace'));
+	if (local) {
+		var localData = local.data;
+		$('.workspace')[0].innerHTML = localData;
+	} else {
+		$('.workspace')[0].innerHTML = '';
+		localStorage.setItem('workspace', JSON.stringify(workspace));
+	}
+	workspace = local;
+}
+
 var repairAllBindings = function () {
 
 	$('.holder').on('click', function (e) {
@@ -62,9 +94,6 @@ var repairAllBindings = function () {
 		else
 			rmat = multiplyMatrices(mat1, mat2);
 
-		console.log(mat1);
-		console.log(mat2);
-		console.log(rmat);
 		var result = arrayToElement(rmat);
 
 		var operator = document.createElement('div');
@@ -126,7 +155,7 @@ $('#transpose').on('click', function (e) {
 		sequence[0] = document.createElement('div');
 		sequence[0].classList.add('sequence');
 		sequence[0].appendChild(activeMatrix.clone()[0]);
-		$('.content')[0].appendChild(sequence[0]);
+		$('.workspace')[0].appendChild(sequence[0]);
 	}
 
 	sequence[0].appendChild(notation);
@@ -160,7 +189,7 @@ $('#determinant').on('click', function (e) {
 		sequence[0] = document.createElement('div');
 		sequence[0].classList.add('sequence');
 		sequence[0].appendChild(mat2[0]);
-		$('.content')[0].appendChild(sequence[0]);
+		$('.workspace')[0].appendChild(sequence[0]);
 	}
 
 
@@ -191,7 +220,7 @@ $('#sum-with').on('click', function (e) {
 		sequence[0] = document.createElement('div');
 		sequence[0].classList.add('sequence');
 		sequence[0].appendChild(activeMatrix.clone()[0]);
-		$('.content')[0].appendChild(sequence[0]);
+		$('.workspace')[0].appendChild(sequence[0]);
 	}
 
 	var actionButton = document.createElement('div');
@@ -229,7 +258,7 @@ $('#subtract-from').on('click', function (e) {
 		sequence[0] = document.createElement('div');
 		sequence[0].classList.add('sequence');
 		sequence[0].appendChild(activeMatrix.clone()[0]);
-		$('.content')[0].appendChild(sequence[0]);
+		$('.workspace')[0].appendChild(sequence[0]);
 	}
 
 	var actionButton = document.createElement('div');
@@ -278,7 +307,7 @@ $('#multiply-by').on('click', function (e) {
 		sequence[0] = document.createElement('div');
 		sequence[0].classList.add('sequence');
 		sequence[0].appendChild(activeMatrix.clone()[0]);
-		$('.content')[0].appendChild(sequence[0]);
+		$('.workspace')[0].appendChild(sequence[0]);
 	}
 
 	var actionButton = document.createElement('div');
@@ -301,8 +330,7 @@ $('#multiply-by').on('click', function (e) {
 
 $(document).mousedown(function (e) {
 
-	var content = $('.content')[0].innerHTML;
-	localStorage.setItem('content', content);
+	saveLocalWorkspaceInfo();
 
 	if (focusedHolder != null) {
 		var text = focusedHolder.text();
@@ -349,7 +377,7 @@ $('#confirm-add-custom-matrix').on('click', function (e) {
 	var isIDmat = checkIDmat();
 
 	var elem = createMatrix(nrows, ncols, count ++, isIDmat, true);
-	var page = document.querySelector('.content');
+	var page = document.querySelector('.workspace');
 
 
 	$('#add-custom-matrix').modal('toggle');
@@ -362,7 +390,7 @@ $('#confirm-add-identity-matrix').on('click', function (e) {
 	var nrows = parseInt($('#nrows1').val());
 
 	var elem = createMatrix(nrows, nrows, count ++, true, true);
-	var page = document.querySelector('.content');
+	var page = document.querySelector('.workspace');
 
 
 	$('#add-identity-matrix').modal('toggle');
@@ -373,7 +401,7 @@ $('#confirm-add-identity-matrix').on('click', function (e) {
 
 $('#nm2x2').on('click', function (e) {
 	var elem = createMatrix(2, 2, count ++, false, true);
-	var page = document.querySelector('.content');
+	var page = document.querySelector('.workspace');
 
 	page.appendChild(elem);
 
@@ -382,7 +410,7 @@ $('#nm2x2').on('click', function (e) {
 
 $('#nm3x3').on('click', function (e) {
 	var elem = createMatrix(3, 3, count ++, false, true);
-	var page = document.querySelector('.content');
+	var page = document.querySelector('.workspace');
 
 	page.appendChild(elem);
 
@@ -390,70 +418,69 @@ $('#nm3x3').on('click', function (e) {
 });
 
 $('#clear-all').on('click', function (e) {
-	localStorage.setItem('content', '');
+	workspace.data = '';
+	updateLocalWorkspaceInfo(workspace);
 });
 
-$('#save').on('click', function (e) {
-	var content = $('.content')[0].innerHTML;
-	localStorage.setItem('content', content);
+var showAlert = function (type, message, time) {
+	
+	var alert = document.createElement('div');
+	alert.classList.add('alert');
+	alert.classList.add('alert-' + type + '');
+	alert.innerHTML = '<span class="fui-checkmark-24 space-after"></span><span class="space-before">' + message + '</span>';
+
+	$('body')[0].appendChild(alert);
+	var w = 'calc(50% - ' + ($('.alert').width() / 2 + 10) + 'px)';
+	$(alert).css('left', w).show().delay(time).fadeOut(500, function () {
+		$(this).remove();
+	});
+}
+
+var syncWorkspace = function () {
 
 	var user_data = new Object();
 	user_data.uid = $('.profile')[0].id;
-	user_data.data = content;
-	user_data.wid = $('.content')[0].id;
-	user_data.name = 'test';
-
-	console.log('saving...');
+	user_data.data = workspace.data;
+	user_data.wid = workspace.wid;
+	user_data.name = workspace.name;
 
 	$.ajax({
-		type: "POST",
+		type: 'GET',
 		url: '/sync',
 		data: user_data,
-		success: function (json) {
-			
-			var result = JSON.parse(json);
+		dataType: 'json',
+		traditional: true,
+		contentType: "application/json; charset=utf-8",
+		success: function (alex) {
 
-			console.log(result);
+			if (alex.code == 0) {
+				
+				showAlert('success', 'All your changes have been saved! Keep up the good work!', 3000);
+				workspace.wid = alex.wid;
+				updateLocalWorkspaceInfo(alex.workspace);
 
-			if (result.code == 0) {
-				var alert = document.createElement('div');
-				alert.classList.add('alert');
-				alert.classList.add('alert-success');
-				alert.innerHTML = '<span class="fui-checkmark-24 space-after"></span><span class="space-before">All your changes have been saved! Keep up the good work!</span>';
-
-				$('body')[0].appendChild(alert);
-				var w = 'calc(50% - ' + ($('.alert').width() / 2 + 10) + 'px)';
-				$(alert).css('left', w).show().delay(3000).fadeOut(500, function () {
-					$(this).remove();
-				});
+				$('.workspace')[0].id = alex.wid;
 			} else {
-				var alert = document.createElement('div');
-				alert.classList.add('alert');
-				alert.classList.add('alert-danger');
-				alert.innerHTML = '<span class="fui-cross-24 space-after"></span><span class="space-before">Ooops! There was an error while trying to save your work!</span>';
-
-				$('body')[0].appendChild(alert);
-				var w = 'calc(50% - ' + ($('.alert').width() / 2 + 10) + 'px)';
-				$(alert).css('left', w).show().delay(3000).fadeOut(500, function () {
-					$(this).remove();
-				});
+				showAlert('danger', 'Ooops! There was an error while trying to save your work!', 3000);
 			}
 		},
 		error: function(err) {
 			console.error(err);
 		}
 	});
-	console.log('done');
+};
+
+$('#save').on('click', function (e) {
+	syncWorkspace();
 });
 
 $(document).on('keyup', function(e) {
-	var content = $('.content')[0].innerHTML;
-	localStorage.setItem('content', content);
+	saveLocalWorkspaceInfo();
 });
 
 $(document).ready(function () {
 	console.log('Scripts loaded! Ready to use!');
 
-	$('.content')[0].innerHTML = localStorage.getItem('content');
+	loadLocalWorkspaceInfo();
 	repairAllBindings();
 });

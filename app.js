@@ -84,7 +84,7 @@ app.get('/forum', routes.forum);
 
 app.get('/logout', routes.logout);
 
-app.post('/sync', routes.sync);
+app.get('/sync', routes.sync);
 
 var restrict = function(req, res, next){
     if (!req.session.passport.user) {

@@ -19,18 +19,19 @@ var sync = function (req, res) {
 				if (!err) {
 					if (data.length == 0) {
 						/* not found, needs creation */
-						db.addWorkspace({ uid: uid, data: data, lastupdate: new Date(), name: name}, function (err) {
+						db.addWorkspace({ uid: uid, data: data, lastupdate: new Date(), name: name, _id: db.ObjectId()}, function (err, object) {
 							if (!err) {
 								/* created */
 								result.code = 0;
 								result.description = 'Success!';
-								res.write(result);
+								result.workspace = object;
+								res.write(JSON.stringify(result));
 								res.end();
 							} else {
 								/* error on create */
 								result.code = -3;
 								result.description = 'Error on create';
-								res.write(result);
+								res.write(JSON.stringify(result));
 								res.end();
 							}
 						});
@@ -39,17 +40,18 @@ var sync = function (req, res) {
 						var wsp = data[0];
 						if (wsp.uid === uid) {
 							/* permissions ok, will update */
-								db.updateWorkspace(wid, data, new Date(), function () {
+								db.updateWorkspace(wid, data, new Date(), function (err, object) {
 								result.code = 0;
 								result.description = 'Success!';
-								res.write(result);
+								result.workspace = object;
+								res.write(JSON.stringify(result));
 								res.end();
 							});
 						} else {
 							/* access denied */
 							result.code = -2;
 							result.description = 'Access denied!';
-							res.write(result);
+							res.write(JSON.stringify(result));
 							res.end();
 						}
 					}
@@ -57,7 +59,7 @@ var sync = function (req, res) {
 					/* database error */
 					result.code = -1;
 					result.description = 'Database error!';
-					res.write(result);
+					res.write(JSON.stringify(result));
 					res.end();
 				}
 			});

@@ -11,3 +11,13 @@ html, body {
 	position: fixed;
 	top: 70px !important;
 }
+
+.workspace-title {
+	text-align: center;
+	border-radius: 8px;
+}
+
+.workspace-title:hover {
+	background: rgb(190, 207, 224);
+	cursor: pointer;
+}

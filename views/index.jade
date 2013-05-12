@@ -3,7 +3,9 @@ extends layout
 block content
 	include index-header
 
-	.content(oncontextmenu='return false;')
+	.content
+		h3.workspace-title(contenteditable) Name this workspace...
+		.workspace(oncontextmenu='return false;')
 	ul.dropdown-menu(id='context-menu')
 		li: a#transpose(href='#') Transpose
 		li: a#determinant(href='#') Determinant
