@@ -13,6 +13,7 @@ var load = function (req, res) {
 
 	var result = new Object();
 	result.code = 0;
+	result.description = '';
 	result.data = [];
 
 	if (uid === req.session.passport.user.id) {
@@ -28,12 +29,14 @@ var load = function (req, res) {
 			} else {
 				/* error */
 				console.log(err);
+				result.description = err;
 				result.code = -1;
 				res.end(JSON.stringify(result));
 			}
 		});
 	} else {
 		result.code = -2;
+		result.description = 'invalid user';
 		res.end(JSON.stringify(result));
 	}
 
