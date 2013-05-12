@@ -5,8 +5,10 @@
 					span.fui-cmd-24.space-after
 					| Matrix
 				ul.nav.pull-left
-					li: a(href='/', id='clear-all'): small
-						| New
+					li: a(href='/', id='clear-all'): small New
+					- if (user)
+						li: a(href='#', id='save'): small Save
+						li: a(href='#', id='load'): small Load
 					li
 						a(href='#'): small Workspace
 						ul
