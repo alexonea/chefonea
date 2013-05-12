@@ -393,6 +393,22 @@ $('#clear-all').on('click', function (e) {
 	localStorage.setItem('content', '');
 });
 
+$('#save').on('click', function (e) {
+	var content = $('.content')[0].innerHTML;
+	localStorage.setItem('content', content);
+
+	var alert = document.createElement('div');
+	alert.classList.add('alert');
+	alert.classList.add('alert-success');
+	alert.innerHTML = '<span class="fui-checkmark-24 space-after"></span><span class="space-before">All your changes have been saved! Keep up the good work!</span>';
+
+	$('body')[0].appendChild(alert);
+	var w = 'calc(50% - ' + ($('.alert').width() / 2 + 10) + 'px)';
+	$(alert).css('left', w).show().delay(3000).fadeOut(500, function () {
+		$(this).remove();
+	});
+});
+
 $(document).on('keyup', function(e) {
 	var content = $('.content')[0].innerHTML;
 	localStorage.setItem('content', content);
