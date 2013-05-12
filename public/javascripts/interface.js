@@ -48,9 +48,9 @@ var loadRemoteWorkspace = function (id) {
 		type: 'GET',
 		url: '/load',
 		data: user_data,
-		dataType: 'json',
-		traditional: true,
-		contentType: "application/json; charset=utf-8",
+		// dataType: 'json',
+		// traditional: true,
+		// contentType: "application/json; charset=utf-8",
 		success: function (data) {
 
 			if (data.code == 0) {
