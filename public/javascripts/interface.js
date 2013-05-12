@@ -575,7 +575,7 @@ $('#load').on('click', function(e) {
 	$.ajax({
 		type: 'GET',
 		url: '/load',
-		data: JSON.stringify({uid: uid}),
+		data: {uid: uid},
 		dataType: 'json',
 		traditional: true,
 		contentType: "application/json; charset=utf-8",
