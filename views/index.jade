@@ -4,14 +4,14 @@ block content
 	include index-header
 
 	.content(oncontextmenu='return false;')
-		ul.dropdown-menu(id='context-menu')
-			li: a#transpose(href='#') Transpose
-			li: a#determinant(href='#') Determinant
-			li.divider
-			li: a#sum-with(href='#') Sum with...
-			li: a#subtract-from(href='#') Subtract from...
-			li: a#multiply-by(href='#') Multiply by...
-			li.divider
-			li: a#removemat(href='#') Remove
+	ul.dropdown-menu(id='context-menu')
+		li: a#transpose(href='#') Transpose
+		li: a#determinant(href='#') Determinant
+		li.divider
+		li: a#sum-with(href='#') Sum with...
+		li: a#subtract-from(href='#') Subtract from...
+		li: a#multiply-by(href='#') Multiply by...
+		li.divider
+		li: a#removemat(href='#') Remove
 
 	include workspace-modals

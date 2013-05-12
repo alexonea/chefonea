@@ -76,7 +76,7 @@ var repairAllBindings = function () {
 		sequence[0].appendChild(result);
 		sequence[0].classList.add('completed');
 		
-		$('.content').removeClass('open');
+		$('body').removeClass('open');
 		sequence.children('.compute-button')[0].remove();
 		repairAllBindings();
 		e.stopPropagation();
@@ -98,12 +98,9 @@ var checkIDmat = function () {
 
 $('#removemat').on('click', function (e) {
 	if (activeMatrix != null) {
-		if (activeMatrix[0].classList.contains('result'))
-			activeMatrix.remove();
-		else
 			activeMatrix.parent().remove();
 	}
-	$('.content').removeClass('open');
+	$('body').removeClass('open');
 	e.stopPropagation();
 });
 
@@ -137,7 +134,7 @@ $('#transpose').on('click', function (e) {
 	sequence[0].appendChild(elem);
 	sequence[0].classList.add('completed');
 	
-	$('.content').removeClass('open');
+	$('body').removeClass('open');
 	repairAllBindings();
 	e.stopPropagation();
 });
@@ -173,7 +170,7 @@ $('#determinant').on('click', function (e) {
 
 	sequence[0].children[0].style.borderRadius = 0 + 'px';
 	
-	$('.content').removeClass('open');
+	$('body').removeClass('open');
 	repairAllBindings();
 	e.stopPropagation();
 });
@@ -211,7 +208,7 @@ $('#sum-with').on('click', function (e) {
 	sequence[0].classList.add('sum');
 	sequence[0].classList.add('completed');
 
-	$('.content').removeClass('open');
+	$('body').removeClass('open');
 	repairAllBindings();
 	e.stopPropagation();	
 });
@@ -249,7 +246,7 @@ $('#subtract-from').on('click', function (e) {
 	sequence[0].classList.add('diff');
 	sequence[0].classList.add('completed');
 
-	$('.content').removeClass('open');
+	$('body').removeClass('open');
 	repairAllBindings();
 	e.stopPropagation();	
 });
@@ -297,7 +294,7 @@ $('#multiply-by').on('click', function (e) {
 	sequence[0].classList.add('mul');
 	sequence[0].classList.add('completed');
 
-	$('.content').removeClass('open');
+	$('body').removeClass('open');
 	repairAllBindings();
 	e.stopPropagation();
 });
@@ -394,7 +391,6 @@ $('#nm3x3').on('click', function (e) {
 
 $('#clear-all').on('click', function (e) {
 	localStorage.setItem('content', '');
-	document.location('/');
 });
 
 $(document).on('keyup', function(e) {
