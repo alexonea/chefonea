@@ -15,6 +15,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 
 routes.forum = require('./routes/forum');
 routes.logout = require('./routes/logout');
+routes.sync = require('./routes/sync');
 
 var app = express();
 
@@ -82,6 +83,8 @@ app.get('/users', user.list);
 app.get('/forum', routes.forum);
 
 app.get('/logout', routes.logout);
+
+app.post('/sync', routes.sync);
 
 var restrict = function(req, res, next){
     if (!req.session.passport.user) {

@@ -397,16 +397,53 @@ $('#save').on('click', function (e) {
 	var content = $('.content')[0].innerHTML;
 	localStorage.setItem('content', content);
 
-	var alert = document.createElement('div');
-	alert.classList.add('alert');
-	alert.classList.add('alert-success');
-	alert.innerHTML = '<span class="fui-checkmark-24 space-after"></span><span class="space-before">All your changes have been saved! Keep up the good work!</span>';
+	var user_data = new Object();
+	user_data.uid = $('.profile')[0].id;
+	user_data.data = content;
+	user_data.wid = $('.content')[0].id;
+	user_data.name = 'test';
 
-	$('body')[0].appendChild(alert);
-	var w = 'calc(50% - ' + ($('.alert').width() / 2 + 10) + 'px)';
-	$(alert).css('left', w).show().delay(3000).fadeOut(500, function () {
-		$(this).remove();
+	console.log('saving...');
+
+	$.ajax({
+		type: "POST",
+		url: '/sync',
+		data: user_data,
+		success: function (json) {
+			
+			var result = JSON.parse(json);
+
+			console.log(result);
+
+			if (result.code == 0) {
+				var alert = document.createElement('div');
+				alert.classList.add('alert');
+				alert.classList.add('alert-success');
+				alert.innerHTML = '<span class="fui-checkmark-24 space-after"></span><span class="space-before">All your changes have been saved! Keep up the good work!</span>';
+
+				$('body')[0].appendChild(alert);
+				var w = 'calc(50% - ' + ($('.alert').width() / 2 + 10) + 'px)';
+				$(alert).css('left', w).show().delay(3000).fadeOut(500, function () {
+					$(this).remove();
+				});
+			} else {
+				var alert = document.createElement('div');
+				alert.classList.add('alert');
+				alert.classList.add('alert-danger');
+				alert.innerHTML = '<span class="fui-cross-24 space-after"></span><span class="space-before">Ooops! There was an error while trying to save your work!</span>';
+
+				$('body')[0].appendChild(alert);
+				var w = 'calc(50% - ' + ($('.alert').width() / 2 + 10) + 'px)';
+				$(alert).css('left', w).show().delay(3000).fadeOut(500, function () {
+					$(this).remove();
+				});
+			}
+		},
+		error: function(err) {
+			console.error(err);
+		}
 	});
+	console.log('done');
 });
 
 $(document).on('keyup', function(e) {

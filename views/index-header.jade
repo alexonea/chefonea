@@ -32,7 +32,7 @@
 								span.fui-man-16.icon.space-before
 					- else
 						li
-							a.profile(href='#')
+							a.profile(href='#', id=user.id)
 								small #{user.name}
 								img.photo(src=user.photo)
 							ul.profile-settings
