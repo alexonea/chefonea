@@ -27,8 +27,8 @@ var loadLocalWorkspaceInfo = function () {
 
 	var local = JSON.parse(localStorage.getItem('workspace'));
 	if (local) {
-		var localData = local.data;
-		$('.workspace')[0].innerHTML = localData;
+		$('.workspace')[0].innerHTML = local.data;
+		$('.workspace-title')[0].innerHTML = local.name
 	} else {
 		$('.workspace')[0].innerHTML = '';
 		localStorage.setItem('workspace', JSON.stringify(workspace));
@@ -419,6 +419,7 @@ $('#nm3x3').on('click', function (e) {
 
 $('#clear-all').on('click', function (e) {
 	workspace.data = '';
+	workspace.name = 'Name this workspace...';
 	updateLocalWorkspaceInfo(workspace);
 });
 
@@ -475,8 +476,38 @@ $('#save').on('click', function (e) {
 });
 
 $('.workspace-title').on('focusout', function () {
+	var text = $(this)[0].innerText;
+	console.log(text);
+	if (text.trim() == '') {
+		$(this)[0].innerHTML = 'Name this workspace...';
+	}
 	workspace.name = $(this)[0].innerHTML;
 	saveLocalWorkspaceInfo();
+});
+
+$('.workspace-title').on('focusin', function () {
+	var text = $(this)[0].innerText;
+	if (text == 'Name this workspace...') {
+		$(this)[0].innerHTML = '';
+	}
+	$(this).focus();
+});
+
+var saveTitleUpdate = function () {
+	return false;
+}
+
+$('.workspace-title').on('keydown', function (e) {
+	switch (e.keyCode) {
+		case 13:
+			e.preventDefault();
+			return saveTitleUpdate();
+		case 8:
+			return ($(this)[0].innerText.length > 0);
+		default:
+			return true;
+	}
+	return false;
 });
 
 $(document).on('keyup', function(e) {
