@@ -82,6 +82,11 @@ var repairAllBindings = function () {
 
 	$('.number, .holder').on('keydown', function (event) {
 
+		if (event.keyCode == 13) {
+			event.preventDefault();
+			return false;
+		}
+
 		// Allow: backspace, delete, tab, escape, and enter
 		if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || 
 			 // Allow: Ctrl+A
@@ -192,7 +197,10 @@ $('#transpose').on('click', function (e) {
 		sequence = new Array(1);
 		sequence[0] = document.createElement('div');
 		sequence[0].classList.add('sequence');
-		sequence[0].appendChild(activeMatrix.clone()[0]);
+		var mat2 = activeMatrix.clone();
+		if (mat2[0].classList.contains('determinant'))
+			mat2[0].classList.remove('determinant');
+		sequence[0].appendChild(mat2[0]);
 		$('.workspace')[0].appendChild(sequence[0]);
 	}
 
@@ -223,11 +231,15 @@ $('#determinant').on('click', function (e) {
 	if (sequence[0].classList.contains('completed')) {
 		var mat2 = activeMatrix.clone();
 		mat2[0].classList.remove('result');
+		mat2[0].classList.add('determinant');
 		sequence = new Array(1);
 		sequence[0] = document.createElement('div');
 		sequence[0].classList.add('sequence');
 		sequence[0].appendChild(mat2[0]);
 		$('.workspace')[0].appendChild(sequence[0]);
+	} else {
+		var mat2 = activeMatrix;
+		mat2[0].classList.add('determinant');
 	}
 
 
@@ -257,7 +269,10 @@ $('#sum-with').on('click', function (e) {
 		sequence = new Array(1);
 		sequence[0] = document.createElement('div');
 		sequence[0].classList.add('sequence');
-		sequence[0].appendChild(activeMatrix.clone()[0]);
+		var mat2 = activeMatrix.clone();
+		if (mat2[0].classList.contains('determinant'))
+			mat2[0].classList.remove('determinant');
+		sequence[0].appendChild(mat2[0]);
 		$('.workspace')[0].appendChild(sequence[0]);
 	}
 
@@ -295,7 +310,10 @@ $('#subtract-from').on('click', function (e) {
 		sequence = new Array(1);
 		sequence[0] = document.createElement('div');
 		sequence[0].classList.add('sequence');
-		sequence[0].appendChild(activeMatrix.clone()[0]);
+		var mat2 = activeMatrix.clone();
+		if (mat2[0].classList.contains('determinant'))
+			mat2[0].classList.remove('determinant');
+		sequence[0].appendChild(mat2[0]);
 		$('.workspace')[0].appendChild(sequence[0]);
 	}
 
@@ -344,7 +362,10 @@ $('#multiply-by').on('click', function (e) {
 		sequence = new Array(1);
 		sequence[0] = document.createElement('div');
 		sequence[0].classList.add('sequence');
-		sequence[0].appendChild(activeMatrix.clone()[0]);
+		var mat2 = activeMatrix.clone();
+		if (mat2[0].classList.contains('determinant'))
+			mat2[0].classList.remove('determinant');
+		sequence[0].appendChild(mat2[0]);
 		$('.workspace')[0].appendChild(sequence[0]);
 	}
 

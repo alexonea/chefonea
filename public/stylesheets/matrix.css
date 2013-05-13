@@ -70,3 +70,7 @@ body table.matrix {
 .result {
 	padding: 5px;
 }
+
+body table.determinant {
+	border-radius: 0 !important;
+}
