@@ -12,6 +12,7 @@ logs
 results
 
 Thumbs.db
+*.docx
 
 npm-debug.log
 
