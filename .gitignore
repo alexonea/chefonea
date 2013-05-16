@@ -13,6 +13,7 @@ results
 
 Thumbs.db
 *.docx
+docs/documentation.docx
 
 npm-debug.log
 
