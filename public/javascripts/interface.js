@@ -176,6 +176,50 @@ $('#removemat').on('click', function (e) {
 	e.stopPropagation();
 });
 
+$('#inverse').on('click', function (e) {
+	var mat = elementToArray(activeMatrix);
+	var det = matrixDeterminant(mat);
+
+	if (det == 0 || (mat.nrows != mat.ncols)) {
+		return;
+	}
+
+	mat = matrixInverse(mat);
+
+	var elem = arrayToElement(mat);
+	var sequence = activeMatrix.parent();
+
+
+	var operator = document.createElement('div');
+	operator.innerHTML = "=";
+	operator.classList.add('operator');
+	//operator.style.paddingTop = sequence.height() / 2 - 4 + 'px';
+
+	var notation = document.createElement('div');
+	notation.classList.add('notation')
+	notation.innerHTML = '-1';
+
+	if (sequence[0].classList.contains('completed')) {
+		sequence = new Array(1);
+		sequence[0] = document.createElement('div');
+		sequence[0].classList.add('sequence');
+		var mat2 = activeMatrix.clone();
+		if (mat2[0].classList.contains('determinant'))
+			mat2[0].classList.remove('determinant');
+		sequence[0].appendChild(mat2[0]);
+		$('.workspace')[0].appendChild(sequence[0]);
+	}
+
+	sequence[0].appendChild(notation);
+	sequence[0].appendChild(operator);
+	sequence[0].appendChild(elem);
+	sequence[0].classList.add('completed');
+	
+	$('body').removeClass('open');
+	repairAllBindings();
+	e.stopPropagation();
+});
+
 $('#transpose').on('click', function (e) {
 	var mat = elementToArray(activeMatrix);
 	mat = transposeMatrix(mat);

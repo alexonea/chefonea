@@ -36,18 +36,22 @@ var createMatrix = function (nrows, ncols, id, isIDmat, inSequence) {
 };
 
 var elementToArray = function (id) {
-	var matrixElem = id;
+	var matrixElem = id.clone();
 	var result = {};
-	var tds = $('#' + matrixElem[0].id + " .holder");
+	var tds = matrixElem.find('td');
 	var count = 0;
 	result.nrows = matrixElem.attr('nrows');
 	result.ncols = matrixElem.attr('ncols');
 	result.numbers = [];
 
+	console.log(tds);
+
 	for (var i = 0; i < result.nrows; i++) {
 		var row = [];
 		for (var j = 0; j < result.ncols; j++) {
-			row.push(parseInt(tds[count ++].innerHTML));
+			console.log(tds[count].innerHTML);
+			console.log(parseFloat(tds[count].innerHTML));
+			row.push(parseFloat(tds[count ++].innerHTML));
 		};
 		result.numbers.push(row);
 	};
@@ -196,4 +200,47 @@ var multiplyMatrices = function (m1, m2) {
     	}
     }
     return result;
+}
+
+var matrixInverse = function (matrixData) {
+	var det = matrixDeterminant(matrixData);
+
+	if (det == 0 || (matrixData.nrows != matrixData.ncols)) return null;
+
+	var n = matrixData.nrows;
+	for (var i = 0; i < n; i++) {
+		for (var j = n; j < 2 * n; j++) {
+			if (i == (j - n)) {
+				matrixData.numbers[i][j] = 1.0;
+			} else {
+				matrixData.numbers[i][j] = 0.0;
+			}
+		}
+	}
+
+	for (var i = 0; i < n; i++) {
+		for (var j = 0; j < n; j++) {
+			if (i != j) {
+				var ratio = matrixData.numbers[j][i] / matrixData.numbers[i][i];
+				for (var k = 0; k < 2 * n; k++) {
+					matrixData.numbers[j][k] -= ratio * matrixData.numbers[i][k];
+				}
+			}
+		}
+	}
+
+	for (var i = 0; i < n; i++) {
+		var a = matrixData.numbers[i][i];
+		for (var j = 0; j < 2 * n; j++) {
+			matrixData.numbers[i][j] /= a;
+		}
+	}
+
+	for (var i = 0; i < n; i++) {
+		for (var j = n; j < 2 * n; j++) {
+			matrixData.numbers[i][j - n] = matrixData.numbers[i][j];
+		}
+	}
+	console.log(matrixData);
+	return matrixData;
 }
